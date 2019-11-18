@@ -47,7 +47,9 @@ public class Window extends JFrame {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 System.out.println(e.getWheelRotation());
-                animator.changeCellSize(e.getWheelRotation());
+                animator.changeCellSize(e.getWheelRotation(),
+                        e.getX(), e.getY());
+
             }
         });
 

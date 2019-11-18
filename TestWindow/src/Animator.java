@@ -7,8 +7,8 @@ public class Animator {
     Graphics graphics;
     Graphics screenGraphics;
 
-    final int CENTER_X = 600;
-    final int CENTER_Y = 400;
+    int CENTER_X = 600;
+    int CENTER_Y = 400;
     int CELL_SIZE = 100;
     int serifSize = 10;
 
@@ -24,8 +24,10 @@ public class Animator {
         this.graphics = img.getGraphics();
     }
 
-    public void changeCellSize(int a) {
+    public void changeCellSize(int a, int windowX, int windowY) {
         resetImg();
+        double plotX = coorTransX(windowX);
+        double plotY = coorTransY(windowY);
         if (a > 0) {
             CELL_SIZE += 5;
         } else {
@@ -33,6 +35,8 @@ public class Animator {
                 CELL_SIZE -= 5;
             }
         }
+        CENTER_X = windowX - (int) (plotX * CELL_SIZE);
+        CENTER_Y = windowY + (int) (plotY * CELL_SIZE);
         drawAxis();
         drawToScreen();
     }
@@ -86,7 +90,7 @@ public class Animator {
                 CENTER_Y - 15, 2 * CENTER_X - 50, CENTER_Y);
         graphics.drawLine(2 * CENTER_X - 80, CENTER_Y + 15,
                 2 * CENTER_X - 50, CENTER_Y);
-        int countOfSerifs = (CENTER_X - 100) / CELL_SIZE;
+        int countOfSerifs = (CENTER_X - 35) / CELL_SIZE;
         for (int i = 0; i < countOfSerifs; i++) {
             graphics.drawLine(CENTER_X + i * CELL_SIZE,
                     CENTER_Y - serifSize,
@@ -99,10 +103,10 @@ public class Animator {
     }
 
     public void drawY() {
-        graphics.drawLine(600, 50, 600, 750);
-        graphics.drawLine(585, 80, 600, 50);
-        graphics.drawLine(615, 80, 600, 50);
-        int countOfSerifs = (CENTER_Y - 100) / CELL_SIZE;
+        graphics.drawLine(CENTER_X, 50, CENTER_X, 750);
+        graphics.drawLine(CENTER_X - 15, 80, CENTER_X, 50);
+        graphics.drawLine(CENTER_X + 15, 80, CENTER_X, 50);
+        int countOfSerifs = (CENTER_Y - 35) / CELL_SIZE;
         for (int i = 0; i < countOfSerifs; i++) {
             graphics.drawLine(CENTER_X - serifSize, CENTER_Y + i * CELL_SIZE,
                     CENTER_X + serifSize, CENTER_Y + i * CELL_SIZE);
