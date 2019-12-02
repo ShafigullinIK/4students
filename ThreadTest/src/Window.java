@@ -15,37 +15,17 @@ public class Window extends JFrame {
         panel.setBackground(Color.WHITE);
         this.add(panel);
         Animator animator = new Animator(panel.getGraphics());
+        new Thread(animator).start();
         this.setVisible(true);
 
-        int x = 100;
-        int y = 100;
-        int step = 10;
-        for (int i = 0; i < 1_000; i++) {
-            if(x > 50 && x < 1_000){
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                x += step;
-                animator.drawOval(x, y);
-                animator.drawToScreen();
-            } else {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                x -= step;
-                step *= -1;
-            }
 
-        }
 
         panel.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                animator.draw2();
+                Ball b = new Ball( e.getY());
+                animator.addBall(b);
+                new Thread(b).start();
             }
 
             @Override
